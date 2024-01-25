@@ -69,12 +69,17 @@ impl<'b> Storage for RefMut<'b> {
     type Type<T: 'static + Value + ?Sized> = &'b mut T;
 }
 
-#[derive(Clone, Debug)]
-struct MyData<S: Storage> {
-    string: S::Type<str>,
-    set: std::collections::BTreeSet<S::Type<u64>>,
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-type MyDataBoxed = MyData<Box>;
-type MyDataArc = MyData<Arc>;
-type MyDataRef<'a> = MyData<Ref<'a>>;
+    #[derive(Clone, Debug)]
+    struct MyData<S: Storage> {
+        string: S::Type<str>,
+        set: std::collections::BTreeSet<S::Type<u64>>,
+    }
+
+    type MyDataBoxed = MyData<Box>;
+    type MyDataArc = MyData<Arc>;
+    type MyDataRef<'a> = MyData<Ref<'a>>;
+}

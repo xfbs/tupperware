@@ -2,5 +2,8 @@
 name = "tupperware"
 version = "0.1.0"
 edition = "2021"
+license = "MIT"
+description = "Storage traits for your types"
+repository = "https://github.com/xfbs/tupperware"
 
 [dependencies]
