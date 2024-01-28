@@ -1,7 +1,7 @@
 # Tupperware
 
 [![docs](https://img.shields.io/badge/docs-latest-blue)](https://docs.rs/tupperware)
-[![crate version](https://img.shields.io/crates/v/restless.svg)](https://crates.io/crates/tupperware)
+[![crate version](https://img.shields.io/crates/v/tupperware.svg)](https://crates.io/crates/tupperware)
 
 Crate that lets you decide if you want to put your types into a `Box`. It allows
 you to express polymorphism over how your data is stored.
