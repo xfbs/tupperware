@@ -117,14 +117,6 @@ With this code, you can now use the type parameter to control how your types are
 This is set to default to storing the type inline, however you have a couple of built-in
 strategies. Here is an example of how `str` maps using different strategies:
 
-| Strategy | Type |
-| --- | --- |
-| Inline | `String` |
-| Arc | `Arc<str>` |
-| Box | `Box<str>` |
-| Rc | `Rc<str>` |
-| Ref<'a> | `&'a str` |
-
 You can also define your own storage mechanisms by implementing the `Storage` trait.
 
 ## License
