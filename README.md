@@ -1,7 +1,7 @@
 # Tupperware
 
-[![docs](https://img.shields.io/badge/docs-latest-blue)](https://docs.rs/tupperware)
 [![crate version](https://img.shields.io/crates/v/tupperware.svg)](https://crates.io/crates/tupperware)
+[![docs](https://img.shields.io/badge/docs-latest-blue)](https://docs.rs/tupperware)
 
 Crate that lets you decide if you want to put your types into a `Box`. It allows
 you to express polymorphism over how your data is stored.
@@ -36,6 +36,82 @@ struct MyData<S: Storage = Inline> {
     orders: S::Value<[OrderId]>,
 }
 ```
+
+Now, depending on the `Storage` type parameter, your values will be stored differently.
+Here is how the struct would be stored for each of the default storage strategies:
+
+<details>
+<summary>Inline</summary>
+
+```rust
+#[derive(Debug, Clone)]
+struct MyData {
+    name: String,
+    orders: Vec<OrderId>,
+}
+```
+
+</details>
+<details>
+<summary>Box</summary>
+
+```rust
+#[derive(Debug, Clone)]
+struct MyData {
+    name: Box<str>,
+    orders: Box<[OrderId]>,
+}
+```
+
+</details>
+<details>
+<summary>Arc</summary>
+
+```rust
+#[derive(Debug, Clone)]
+struct MyData {
+    name: Arc<str>,
+    orders: Arc<[OrderId]>,
+}
+```
+
+</details>
+<details>
+<summary>Rc</summary>
+
+```rust
+#[derive(Debug, Clone)]
+struct MyData {
+    name: Rc<str>,
+    orders: Rc<[OrderId]>,
+}
+```
+
+</details>
+<details>
+<summary>Ref<'a></summary>
+
+```rust
+#[derive(Debug, Clone)]
+struct MyData {
+    name: &'a str,
+    orders: &'a [OrderId]>,
+}
+```
+
+</details>
+
+This example shows how the storage strategy now lets you control how your type
+is stored. It allows you to specialize the storage mechanism easily, for example
+swapping out `Rc` for `Arc` if a given feature is enabled:
+
+```rust
+#[cfg(feature = "sync")]
+pub type MyData = types::MyData<Arc>;
+#[cfg(not(feature = "sync"))]
+pub type MyData = types::MyData<Rc>;
+```
+
 
 With this code, you can now use the type parameter to control how your types are stored.
 This is set to default to storing the type inline, however you have a couple of built-in
